@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = [
+  {
+    slug: 'prevent-clogged-drains',
+    title: 'Simple Ways to Prevent Clogged Drains at Home',
+    description: 'Practical habits that reduce kitchen and bathroom drain clogs without special equipment.',
+    pubDate: '2025-09-12',
+  },
+  {
+    slug: 'water-heater-maintenance-tips',
+    title: 'Water Heater Maintenance Tips for Longer Service Life',
+    description: 'Basic checks and habits that help tank and tankless water heaters run more reliably.',
+    pubDate: '2025-10-03',
+  },
+];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Plumbing tips and home maintenance advice from emergencyplumberlansing—serving Lansing, MI and nearby communities."
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Blog</span>
+      </nav>
+      <h1>Blog</h1>
+      <p style="color:var(--color-text-muted);margin-bottom:2rem;">
+        Practical plumbing and home maintenance articles for homeowners in the Lansing area.
+      </p>
+      <div class="card-grid">
+        {posts.map((post) => (
+          <article class="card">
+            <time datetime={post.pubDate} style="font-size:0.875rem;color:var(--color-text-muted);">
+              {new Date(post.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            <h2 style="font-size:1.15rem;margin-top:0.5rem;">
+              <a href={`/blog/${post.slug}/`}>{post.title}</a>
+            </h2>
+            <p>{post.description}</p>
+            <a href={`/blog/${post.slug}/`}>Read more →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

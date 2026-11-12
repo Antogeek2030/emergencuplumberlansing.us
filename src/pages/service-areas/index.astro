@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { areas } from '../../data/areas';
+---
+
+<BaseLayout
+  title="Service Areas"
+  description="Plumbing services for Lansing, Grand Ledge, East Lansing, Okemos, Holt, Mason, DeWitt, Haslett, and surrounding Michigan communities."
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Service Areas</span>
+      </nav>
+      <h1>Areas We Serve</h1>
+      <p style="max-width:42rem;color:var(--color-text-muted);margin-bottom:2rem;">
+        emergencyplumberlansing provides residential and light commercial plumbing
+        services across the greater Lansing region. Select a community below to
+        learn more about local coverage.
+      </p>
+      <div class="card-grid">
+        {areas.map((area) => (
+          <article class="card">
+            <h2 style="font-size:1.15rem;"><a href={`/service-areas/${area.slug}/`}>{area.name}</a></h2>
+            <p>{area.description.slice(0, 140)}…</p>
+            <a href={`/service-areas/${area.slug}/`}>Learn more →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Don’t See Your Town?</h2>
+      <p>We may still be able to help. Reach out with your location and we will let you know.</p>
+      <a href="/contact/" class="btn btn-primary btn-lg">Contact Us</a>
+    </div>
+  </section>
+</BaseLayout>

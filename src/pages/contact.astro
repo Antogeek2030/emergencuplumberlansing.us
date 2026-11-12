@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Contact emergencyplumberlansing for plumbing service in Lansing, Grand Ledge, and nearby areas. Request a callback or appointment."
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Contact</span>
+      </nav>
+      <h1>Contact Us</h1>
+      <p style="max-width:36rem;color:var(--color-text-muted);margin-bottom:2rem;">
+        Tell us about your plumbing need and how to reach you. We use this form
+        to follow up—please include enough detail so we can respond appropriately.
+      </p>
+
+      <div style="display:grid;gap:2.5rem;grid-template-columns:1fr;">
+        <div>
+          <form
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            id="contact-form"
+          >
+            <!-- Replace with your Web3Forms access key -->
+            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+            <input type="hidden" name="subject" value="New plumbing inquiry from emergencyplumberlansing.us" />
+            <input type="hidden" name="from_name" value="emergencyplumberlansing Website" />
+            <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" />
+
+            <div class="form-group">
+              <label for="name">Name <span aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" required autocomplete="name" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email <span aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+            </div>
+
+            <div class="form-group">
+              <label for="location">City / Area</label>
+              <input type="text" id="location" name="location" placeholder="e.g. Lansing, Grand Ledge" />
+            </div>
+
+            <div class="form-group">
+              <label for="service">Service Needed</label>
+              <select id="service" name="service">
+                <option value="">Select a service (optional)</option>
+                <option value="Emergency Plumbing">Emergency Plumbing</option>
+                <option value="Drain Cleaning">Drain Cleaning</option>
+                <option value="Water Heater">Water Heater</option>
+                <option value="Leak Detection">Leak Detection</option>
+                <option value="Toilet / Fixture">Toilet / Fixture</option>
+                <option value="Other">Other / Not Sure</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">How can we help? <span aria-hidden="true">*</span></label>
+              <textarea id="message" name="message" required placeholder="Briefly describe the issue and any timing preferences."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+            <p class="form-note">
+              By submitting, you agree we may contact you about this request.
+              See our <a href="/privacy-policy/">Privacy Policy</a>.
+            </p>
+          </form>
+
+          <div id="form-success" class="thank-you" hidden>
+            <h2>Thank You</h2>
+            <p>Your message has been sent. We will follow up as soon as we can.</p>
+            <a href="/" class="btn btn-primary" style="margin-top:1rem;">Back to Home</a>
+          </div>
+        </div>
+
+        <div>
+          <h2 style="font-size:1.15rem;">Location</h2>
+          <p>
+            526 N Clinton St<br />
+            Grand Ledge, MI 48837<br />
+            USA
+          </p>
+          <p style="margin-top:1.5rem;">
+            <strong>Service area:</strong> Lansing, Grand Ledge, East Lansing,
+            Okemos, Holt, Mason, DeWitt, Haslett, and nearby communities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const success = document.getElementById('form-success');
+    if (form && success) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+        }
+        try {
+          const data = new FormData(form);
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { Accept: 'application/json' },
+          });
+          if (res.ok) {
+            form.hidden = true;
+            success.hidden = false;
+          } else {
+            alert('Something went wrong. Please try again or email us directly.');
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = 'Send Message';
+            }
+          }
+        } catch {
+          alert('Network error. Please try again later.');
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Send Message';
+          }
+        }
+      });
+    }
+  </script>
+</BaseLayout>

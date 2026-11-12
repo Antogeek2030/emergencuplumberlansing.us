@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { services, getServiceBySlug } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const service = getServiceBySlug(slug!);
+
+if (!service) {
+  return Astro.redirect('/services/');
+}
+---
+
+<BaseLayout
+  title={service.title}
+  description={`${service.shortDescription} Serving Lansing, Grand Ledge, East Lansing, and nearby Michigan communities.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/services/">Services</a> <span>/</span>
+        <span>{service.title}</span>
+      </nav>
+
+      <h1>{service.title}</h1>
+      <div class="prose">
+        <p>{service.intro}</p>
+
+        <h2>How It Works</h2>
+        <ol class="process-steps">
+          {service.process.map((step) => (
+            <li>{step}</li>
+          ))}
+        </ol>
+
+        <h2>Pricing</h2>
+        <div class="price-range">
+          <p style="margin:0;"><strong>Typical range:</strong> {service.priceRange}</p>
+        </div>
+        <p class="form-note">Prices vary by complexity, materials, and access. We provide estimates before major work.</p>
+
+        <h2>Frequently Asked Questions</h2>
+        {service.faqs.map((faq) => (
+          <div class="faq-item">
+            <h3>{faq.question}</h3>
+            <p>{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+
+      <div style="margin-top:2.5rem;">
+        <a href="/contact/" class="btn btn-primary btn-lg">Request This Service</a>
+        <a href="/services/" class="btn btn-outline" style="margin-left:0.75rem;">All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2>Related Services</h2>
+      <div class="card-grid" style="margin-top:1.25rem;">
+        {services
+          .filter((s) => s.slug !== service.slug)
+          .slice(0, 3)
+          .map((s) => (
+            <article class="card">
+              <h3 style="font-size:1.05rem;"><a href={`/services/${s.slug}/`}>{s.title}</a></h3>
+              <p>{s.shortDescription}</p>
+            </article>
+          ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

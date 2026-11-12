@@ -1,0 +1,172 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogType?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const siteUrl = 'https://emergencyplumberlansing.us';
+const pageUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const fullTitle = title.includes('emergencyplumberlansing') ? title : `${title} | emergencyplumberlansing`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={pageUrl} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:site_name" content="emergencyplumberlansing" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    <title>{fullTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo">emergency<span>plumber</span>lansing</a>
+
+        <nav class="nav" aria-label="Main navigation">
+          <ul class="nav-list">
+            <li><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a></li>
+            <li class="dropdown">
+              <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                Services
+                <span aria-hidden="true">▾</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li role="none"><a role="menuitem" href="/services/">All Services</a></li>
+                <li role="none"><a role="menuitem" href="/services/emergency-plumbing/">Emergency Plumbing</a></li>
+                <li role="none"><a role="menuitem" href="/services/drain-cleaning/">Drain Cleaning</a></li>
+                <li role="none"><a role="menuitem" href="/services/water-heater-repair/">Water Heater Repair</a></li>
+                <li role="none"><a role="menuitem" href="/services/leak-detection/">Leak Detection</a></li>
+                <li role="none"><a role="menuitem" href="/services/toilet-repair/">Toilet Repair</a></li>
+                <li role="none"><a role="menuitem" href="/services/">View all services →</a></li>
+              </ul>
+            </li>
+            <li><a href="/service-areas/" aria-current={Astro.url.pathname.startsWith('/service-areas') ? 'page' : undefined}>Service Areas</a></li>
+            <li><a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>About</a></li>
+            <li><a href="/blog/" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Blog</a></li>
+            <li><a href="/contact/" aria-current={Astro.url.pathname === '/contact/' ? 'page' : undefined}>Contact</a></li>
+          </ul>
+        </nav>
+
+        <a href="/contact/" class="btn btn-primary header-cta">Get Help</a>
+
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="menu-toggle">
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav" hidden>
+      <a href="/">Home</a>
+      <a href="/services/">Services</a>
+      <div class="mobile-dropdown">
+        <a href="/services/emergency-plumbing/">Emergency Plumbing</a>
+        <a href="/services/drain-cleaning/">Drain Cleaning</a>
+        <a href="/services/water-heater-repair/">Water Heater Repair</a>
+        <a href="/services/leak-detection/">Leak Detection</a>
+        <a href="/services/toilet-repair/">Toilet Repair</a>
+      </div>
+      <a href="/service-areas/">Service Areas</a>
+      <a href="/about/">About</a>
+      <a href="/blog/">Blog</a>
+      <a href="/contact/">Contact</a>
+    </div>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h3>emergencyplumberlansing</h3>
+            <p>Local plumbing help for Lansing and nearby communities. From emergency repairs to routine service, we focus on clear communication and quality work.</p>
+            <p style="margin-top:1rem;">
+              526 N Clinton St<br />
+              Grand Ledge, MI 48837
+            </p>
+          </div>
+          <div>
+            <h3>Services</h3>
+            <ul class="footer-links">
+              <li><a href="/services/emergency-plumbing/">Emergency Plumbing</a></li>
+              <li><a href="/services/drain-cleaning/">Drain Cleaning</a></li>
+              <li><a href="/services/water-heater-repair/">Water Heater Repair</a></li>
+              <li><a href="/services/leak-detection/">Leak Detection</a></li>
+              <li><a href="/services/">All Services</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Areas</h3>
+            <ul class="footer-links">
+              <li><a href="/service-areas/lansing/">Lansing</a></li>
+              <li><a href="/service-areas/grand-ledge/">Grand Ledge</a></li>
+              <li><a href="/service-areas/east-lansing/">East Lansing</a></li>
+              <li><a href="/service-areas/okemos/">Okemos</a></li>
+              <li><a href="/service-areas/">All Areas</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Company</h3>
+            <ul class="footer-links">
+              <li><a href="/about/">About</a></li>
+              <li><a href="/contact/">Contact</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/privacy-policy/">Privacy Policy</a></li>
+              <li><a href="/terms/">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; {new Date().getFullYear()} emergencyplumberlansing. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <a href="/contact/" class="sticky-call" aria-label="Contact us for help">
+      <span aria-hidden="true">📞</span> Get Help
+    </a>
+
+    <script>
+      const toggle = document.getElementById('menu-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      if (toggle && mobileNav) {
+        toggle.addEventListener('click', () => {
+          const open = mobileNav.classList.toggle('open');
+          mobileNav.hidden = !open;
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+          toggle.textContent = open ? '✕' : '☰';
+        });
+      }
+    </script>
+  </body>
+</html>

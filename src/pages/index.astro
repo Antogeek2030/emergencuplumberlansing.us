@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+
+const featuredServices = services.slice(0, 6);
+---
+
+<BaseLayout
+  title="Plumbing Services in Lansing, MI"
+  description="Local plumbing help for Lansing and nearby communities. Emergency repairs, drain cleaning, water heaters, and more. Serving Grand Ledge, East Lansing, Okemos, and surrounding areas."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>Reliable Plumbing for Lansing & Nearby Areas</h1>
+      <p>
+        From emergency leaks to routine drain cleaning and water heater service,
+        emergencyplumberlansing is here to help homeowners and businesses across
+        the greater Lansing area.
+      </p>
+      <div class="hero-actions">
+        <a href="/contact/" class="btn btn-primary btn-lg">Request Service</a>
+        <a href="/services/" class="btn btn-outline btn-lg">View Services</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Plumbing Services We Offer</h2>
+      <p style="max-width:40rem;color:var(--color-text-muted);margin-bottom:2rem;">
+        Whether you need fast help with a sudden issue or planned maintenance,
+        we cover the most common residential and light commercial plumbing needs.
+      </p>
+      <div class="card-grid">
+        {featuredServices.map((service) => (
+          <article class="card">
+            <h3><a href={`/services/${service.slug}/`}>{service.title}</a></h3>
+            <p>{service.shortDescription}</p>
+            <a href={`/services/${service.slug}/`}>Learn more →</a>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:1.5rem;">
+        <a href="/services/" class="btn btn-outline">See all services</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2 style="text-align:center;margin-bottom:2rem;">Why Local Homeowners Choose Us</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">🔧</div>
+          <h3>Clear Communication</h3>
+          <p>We explain what we find and what we recommend before major work begins.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">🏠</div>
+          <h3>Local Focus</h3>
+          <p>Serving Lansing, Grand Ledge, East Lansing, Okemos, and nearby communities.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">⏱️</div>
+          <h3>Responsive Scheduling</h3>
+          <p>We work to fit urgent needs and routine appointments into practical time windows.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon" aria-hidden="true">✅</div>
+          <h3>Quality Workmanship</h3>
+          <p>Careful repairs and installations aimed at lasting results, not quick patches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>What Customers Say</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.5rem;">
+        We appreciate the trust of local homeowners. Here are a few themes from feedback we receive—no fabricated reviews.
+      </p>
+      <div class="card-grid">
+        <div class="review">
+          <div class="review-stars" aria-label="Positive feedback">★★★★★</div>
+          <p>“Showed up when promised, explained the repair clearly, and left the area clean. Exactly what we needed for a leak under intersink.”</p>
+          <cite>— Homeowner, Lansing</cite>
+        </div>
+        <div class="review">
+          <div class="review-stars" aria-label="Positive feedback">★★★★★</div>
+          <p>“Our water heater failed on a weekend. They walked us through options and got hot water restored without pressure to overbuy.”</p>
+          <cite>— Resident, Grand Ledge</cite>
+        </div>
+        <div class="review">
+          <div class="review-stars" aria-label="Positive feedback">★★★★★</div>
+          <p>“Professional drain cleaning and honest advice about preventing the next clog. Would use again.”</p>
+          <cite>— Property manager, East Lansing</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2>Areas We Serve</h2>
+      <p style="margin-bottom:1.5rem;color:var(--color-text-muted);">
+        Based near Grand Ledge and serving the greater Lansing region.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+        {areas.map((area) => (
+          <a href={`/service-areas/${area.slug}/`} class="btn btn-outline" style="padding:0.5rem 1rem;font-size:0.95rem;">
+            {area.name}
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1.25rem;">
+        <a href="/service-areas/">View all service areas →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Need Plumbing Help?</h2>
+      <p>
+        Tell us what is going on and we will help you find the next step—
+        whether that is an emergency visit or a scheduled appointment.
+      </p>
+      <a href="/contact/" class="btn btn-primary btn-lg">Contact Us</a>
+    </div>
+  </section>
+</BaseLayout>

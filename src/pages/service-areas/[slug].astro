@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { areas, getAreaBySlug } from '../../data/areas';
+import { services } from '../../data/services';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({
+    params: { slug: area.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const area = getAreaBySlug(slug!);
+
+if (!area) {
+  return Astro.redirect('/service-areas/');
+}
+
+const relatedServices = services.slice(0, 4);
+---
+
+<BaseLayout
+  title={`Plumbing Services in ${area.name}`}
+  description={`Professional plumbing services in ${area.name}, MI. Emergency repairs, drain cleaning, water heaters, and more from emergencyplumberlansing.`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/service-areas/">Service Areas</a> <span>/</span>
+        <span>{area.name}</span>
+      </nav>
+
+      <h1>Plumbing Services in {area.name}</h1>
+      <div class="prose">
+        <p>{area.description}</p>
+
+        {area.neighborhoods && area.neighborhoods.length > 0 && (
+          <>
+            <h2>Neighborhoods & Nearby</h2>
+            <p>We commonly serve these parts of {area.name} and the immediate surroundings:</p>
+            <ul>
+              {area.neighborhoods.map((n) => (
+                <li>{n}</li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <h2>Services Available in {area.name}</h2>
+        <p>
+          Residents and businesses in {area.name} can request the full range of our
+          plumbing services, including emergency response, drain work, water heater
+          repair, leak detection, and fixture installation.
+        </p>
+      </div>
+
+      <div class="card-grid" style="margin-top:1.5rem;">
+        {relatedServices.map((s) => (
+          <article class="card">
+            <h3 style="font-size:1.05rem;"><a href={`/services/${s.slug}/`}>{s.title}</a></h3>
+            <p>{s.shortDescription}</p>
+          </article>
+        ))}
+      </div>
+
+      <p style="margin-top:1.5rem;">
+        <a href="/services/">View all services →</a>
+      </p>
+
+      <div style="margin-top:2.5rem;">
+        <a href="/contact/" class="btn btn-primary btn-lg">Request Service in {area.name}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

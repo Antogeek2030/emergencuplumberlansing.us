@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { services } from '../../data/services';
+---
+
+<BaseLayout
+  title="Plumbing Services"
+  description="Browse plumbing services offered by emergencyplumberlansing in Lansing, MI and nearby areas—including emergency repairs, drain cleaning, water heaters, and more."
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Services</span>
+      </nav>
+      <h1>Our Plumbing Services</h1>
+      <p style="max-width:42rem;color:var(--color-text-muted);margin-bottom:2rem;">
+        From urgent leaks to planned upgrades, we offer a full range of residential
+        and light commercial plumbing services across the greater Lansing area.
+        Select a service below to learn more about the process and what to expect.
+      </p>
+      <div class="card-grid">
+        {services.map((service) => (
+          <article class="card">
+            <h2 style="font-size:1.15rem;"><a href={`/services/${service.slug}/`}>{service.title}</a></h2>
+            <p>{service.shortDescription}</p>
+            <a href={`/services/${service.slug}/`}>Details →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <h2>Not Sure Which Service You Need?</h2>
+      <p>Describe the issue and we will help point you in the right direction.</p>
+      <a href="/contact/" class="btn btn-primary btn-lg">Get in Touch</a>
+    </div>
+  </section>
+</BaseLayout>
